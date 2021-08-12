@@ -102,7 +102,6 @@ check_depends(){
 get_args(){
     OUT_TYPE='DNSMASQ_RULES'
     DNS_IP='127.0.0.1'
-    DNS_PORT='5353'
     IPSET_NAME=''
     FILE_FULLPATH=''
     CURL_EXTARG=''
@@ -127,10 +126,6 @@ get_args(){
                 ;;
             --dns | -d)
                 DNS_IP="$2"
-                shift
-                ;;
-            --port | -p)
-                DNS_PORT="$2"
                 shift
                 ;;
             --ipset | -s)
@@ -179,12 +174,6 @@ get_args(){
         IPV6_TEST=$(echo $DNS_IP | grep -E $IPV6_PATTERN)
         if [ "$IPV4_TEST" != "$DNS_IP" -a "$IPV6_TEST" != "$DNS_IP" ]; then
             _red 'Error: Please enter a valid DNS server IP address.\n'
-            exit 1
-        fi
-
-        # Check DNS port
-        if [ $DNS_PORT -lt 1 -o $DNS_PORT -gt 65535 ]; then
-            _red 'Error: Please enter a valid DNS server port.\n'
             exit 1
         fi
 
@@ -283,11 +272,11 @@ process(){
     # Convert domains into dnsmasq rules
         if [ $WITH_IPSET -eq 1 ]; then
             _green 'Ipset rules included.'
-            sort -u $DOMAIN_FILE | $SED_ERES 's#(.+)#server=/\1/'$DNS_IP'\#'$DNS_PORT'\
+            sort -u $DOMAIN_FILE | $SED_ERES 's#(.+)#address=/\1/'$DNS_IP'\
 ipset=/\1/'$IPSET_NAME'#g' > $CONF_TMP_FILE
         else
             _green 'Ipset rules not included.'
-            sort -u $DOMAIN_FILE | $SED_ERES 's#(.+)#server=/\1/'$DNS_IP'\#'$DNS_PORT'#g' > $CONF_TMP_FILE
+            sort -u $DOMAIN_FILE | $SED_ERES 's#(.+)#address=/\1/'$DNS_IP'#g' > $CONF_TMP_FILE
         fi
 
         # Generate output file
