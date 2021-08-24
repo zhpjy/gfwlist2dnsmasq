@@ -32,6 +32,10 @@ Valid options are:
                 Please put one domain per line
     -h, --help  Usage
 ```
+Example:
+```
+./gfwlist2dnsmasq.sh -d 192.168.2.1 -o gfw.conf
+```
 
 ### OpenWRT Usage
 
