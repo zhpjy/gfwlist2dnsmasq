@@ -1,5 +1,5 @@
 # gfwlist2dnsmasq
-A shell script which convert gfwlist into dnsmasq rules.
+A shell script which convert gfwlist into dnsmasq rules. Example: ```address=/google.com/192.168.2.1```
 
 Working on both Linux-based (Debian/Ubuntu/Cent OS/OpenWrt/LEDE/Cygwin/Bash on Windows/etc.) and BSD-based (FreeBSD/Mac OS X/etc.) system.
 
@@ -9,8 +9,8 @@ This script needs `sed`, `base64`, `curl`(or`wget`). You should have these binar
 ```
 sh gfwlist2dnsmasq.sh [options] -o FILE
 Valid options are:
-    -d, --dns <dns_ip>
-                DNS IP address for the GfwList Domains (Default: 127.0.0.1)
+    -d, --result <result_ip>
+                DNS result IP address for the GfwList Domains (Default: 127.0.0.1)
     -p, --port <dns_port>
                 DNS Port for the GfwList Domains (Default: 5353)
     -s, --ipset <ipset_name>
