@@ -1,0 +1,30 @@
+name: Daily GFWList Update
+
+on:
+  schedule:
+    # Run daily at 2 AM Beijing Time (UTC+8)
+    - cron: '0 18 * * *'
+
+jobs:
+  update-gfwlist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run gfwlist2dnsmasq script
+        run: |
+          chmod +x ./gfwlist2dnsmasq.sh
+          ./gfwlist2dnsmasq.sh -d 192.168.2.254 -o gfw.conf
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add gfw.conf
+          git commit -m "Update gfw.conf (auto-generated)"
+          git push
