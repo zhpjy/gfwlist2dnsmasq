@@ -4,6 +4,7 @@ on:
   schedule:
     # Run daily at 2 AM Beijing Time (UTC+8)
     - cron: '0 18 * * *'
+  workflow_dispatch:
 
 jobs:
   update-gfwlist:
