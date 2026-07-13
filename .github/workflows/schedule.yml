@@ -17,7 +17,7 @@ jobs:
       - name: Run gfwlist2dnsmasq script
         run: |
           chmod +x ./gfwlist2dnsmasq.sh
-          ./gfwlist2dnsmasq.sh -d 192.168.2.254 -o gfw.conf
+          ./gfwlist2dnsmasq.sh -d 66.66.66.254 -o gfw.conf
 
       - name: Configure Git
         run: |
